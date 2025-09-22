@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add / Edit Profile{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow p-4">
+      <h2 class="mb-4 text-center">Add / Edit Profile</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Show remove button only if profile has a picture -->
+        {% if form.instance.profile_pic %}
+          <div class="mb-3">
+            <img src="{{ form.instance.profile_pic.url }}" class="img-thumbnail mb-2" style="max-width:150px;">
+            <button type="submit" name="remove_pic" class="btn btn-danger btn-sm">
+              Remove Profile Picture
+            </button>
+          </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'profile-list' %}" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

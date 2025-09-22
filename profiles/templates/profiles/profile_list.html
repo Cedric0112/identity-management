@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My Profiles{% endblock %}
+{% block content %}
+<h1 class="mb-4">My Profiles</h1>
+
+<ul class="list-group">
+  {% for profile in profiles %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>{{ profile.context }}</strong>: {{ profile.display_name }}
+        <span class="badge bg-secondary">{{ profile.visibility }}</span>
+        {% if profile.profile_picture %}
+            <br><img src="{{ profile.profile_picture.url }}" 
+                    class="rounded-circle mt-2" 
+                    style="width: 60px; height: 60px; object-fit: cover;">
+        {% else %}
+            <br><img src="{% static 'images/default_avatar.jpg' %}" 
+                    class="rounded-circle mt-2" 
+                    style="width: 60px; height: 60px; object-fit: cover;">
+        {% endif %}
+      </div>
+      <div>
+        <a href="{% url 'update_profile' profile.id %}" class="btn btn-sm btn-primary">Edit</a>
+        <form action="{% url 'delete_profile' profile.id %}" method="post" class="d-inline" onsubmit="return confirm('Delete this profile?');">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No profiles found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

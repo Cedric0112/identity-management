@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Public Profiles{% endblock %}
+{% block content %}
+<h1 class="mb-4">Public Profiles Directory</h1>
+
+<ul class="list-group">
+  {% for profile in profiles %}
+    <li class="list-group-item">
+      <strong>{{ profile.display_name }}</strong> 
+      <span class="badge bg-success">{{ profile.context }}</span>
+      {% if profile.profile_picture %}
+            <br><img src="{{ profile.profile_picture.url }}" 
+                    class="rounded-circle mt-2" 
+                    style="width: 60px; height: 60px; object-fit: cover;">
+        {% else %}
+            <br><img src="{% static 'images/default_avatar.jpg' %}" 
+                    class="rounded-circle mt-2" 
+                    style="width: 60px; height: 60px; object-fit: cover;">
+        {% endif %}
+    </li>
+  {% empty %}
+    <li class="list-group-item">No public profiles available.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

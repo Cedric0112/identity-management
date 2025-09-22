@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Account Deleted{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
+  <div class="alert alert-success text-center" id="deleteAlert">
+    Your account has been <strong>deleted</strong>.
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    document.getElementById("deleteAlert").style.display = "none";
+    window.location.href = "{% url 'home' %}";
+  }, 3000);
+</script>
+{% endblock %}
